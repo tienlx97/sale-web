@@ -1,6 +1,7 @@
 import { defineConfig } from "@rsbuild/core";
 import { pluginReact } from "@rsbuild/plugin-react";
 import { pluginBabel } from "@rsbuild/plugin-babel";
+import path from 'path';
 
 export default defineConfig({
   plugins: [
@@ -12,4 +13,9 @@ export default defineConfig({
       },
     }),
   ],
+   resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
+  },
 });
