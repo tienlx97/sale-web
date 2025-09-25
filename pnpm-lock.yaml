@@ -23,6 +23,9 @@ importers:
       react-router:
         specifier: 7.9.1
         version: 7.9.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      to-words:
+        specifier: ^4.7.0
+        version: 4.7.0
     devDependencies:
       '@biomejs/biome':
         specifier: 2.2.4
@@ -1155,6 +1158,10 @@ packages:
 
   tabster@8.5.6:
     resolution: {integrity: sha512-2vfrRGrx8O9BjdrtSlVA5fvpmbq5HQBRN13XFRg6LAvZ1Fr3QdBnswgT4YgFS5Bhoo5nxwgjRaRueI2Us/dv7g==}
+
+  to-words@4.7.0:
+    resolution: {integrity: sha512-A113L8FrmpHBTbH2Y/c7phYTpeVWYadbXFCAGrc4pnxGzC+x14ju44UO0+8HMJA9SlsuV2dS6UzrHT236SJenw==}
+    engines: {node: '>=12.0.0'}
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
@@ -2989,6 +2996,8 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       '@rollup/rollup-linux-x64-gnu': 4.40.0
+
+  to-words@4.7.0: {}
 
   tslib@2.8.1: {}
 

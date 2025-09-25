@@ -1,10 +1,11 @@
 /** biome-ignore-all lint/correctness/useUniqueElementIds: <explanation> */
-import { DateTab } from '@/features/contract/components/date-tab';
-import { PartiesTab } from '@/features/contract/components/parties-tab';
-import { mergeClasses } from '@fluentui/react-components';
-import { TabList, Tab } from '@fluentui/react-components';
-import { makeStyles } from '@fluentui/react-components';
+
+import { makeStyles, mergeClasses, Tab, TabList } from '@fluentui/react-components';
 import { useState } from 'react';
+import { ContractPeriodTab } from '@/features/contract/components/contract-period-tab';
+import { DateTab } from '@/features/contract/components/date-tab';
+import { PartiesContractTab } from '@/features/contract/components/parties-tab';
+import { PaymentTab } from '@/features/contract/components/payment-tab';
 
 const useStyles = makeStyles({
 	root: {
@@ -42,6 +43,10 @@ export const ContractPage = () => {
 					<Tab id='contract-period-tab' value='contract-period-tab'>
 						Contract Period
 					</Tab>
+
+					<Tab id='payment-tab' value='payment-tab'>
+						Payment
+					</Tab>
 				</TabList>
 
 				<div className={mergeClasses(_styles.panel, selectedValue !== 'date-tab' && _styles.hidden)}>
@@ -49,11 +54,15 @@ export const ContractPage = () => {
 				</div>
 
 				<div className={mergeClasses(_styles.panel, selectedValue !== 'parties-contract-tab' && _styles.hidden)}>
-					<PartiesTab />
+					<PartiesContractTab />
 				</div>
 
-				<div className={mergeClasses(_styles.panel, selectedValue !== 'parties-contract-tab' && _styles.hidden)}>
-					<PartiesTab />
+				<div className={mergeClasses(_styles.panel, selectedValue !== 'contract-period-tab' && _styles.hidden)}>
+					<ContractPeriodTab />
+				</div>
+
+				<div className={mergeClasses(_styles.panel, selectedValue !== 'payment-tab' && _styles.hidden)}>
+					<PaymentTab />
 				</div>
 
 				{/* <SignedDate />

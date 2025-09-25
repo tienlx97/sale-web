@@ -1,6 +1,6 @@
+import { Button, Field, Input, makeStyles, Text } from '@fluentui/react-components';
 import { AddIcon } from '@/coponents/icons/add-icon';
 import { SubIcon } from '@/coponents/icons/sub-icon';
-import { Button, Field, Input, makeStyles, Text } from '@fluentui/react-components';
 
 const useStyles = makeStyles({
 	sectionHeader: {
@@ -44,7 +44,7 @@ export const PartyKeyValue = ({
 	value,
 	onChange,
 	disableAppend,
-	newRowTemplate = { key: '', value: '' },
+	newRowTemplate = { key: '', value: '', canDelete: true },
 	styles = {
 		key: 3,
 		value: 7
@@ -96,7 +96,7 @@ export const PartyKeyValue = ({
 						/>
 					</Field>
 
-					{!disableAppend && (
+					{!disableAppend && item.canDelete && (
 						<Button
 							size='small'
 							appearance='transparent'

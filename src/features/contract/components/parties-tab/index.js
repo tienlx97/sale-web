@@ -1,1 +1,1 @@
-export * from './parties-tab';
+export * from './parties-contract-tab';
