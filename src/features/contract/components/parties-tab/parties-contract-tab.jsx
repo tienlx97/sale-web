@@ -1,9 +1,24 @@
-import { Card } from '@fluentui/react-components';
+import { Card, makeStyles } from '@fluentui/react-components';
 import { useState } from 'react';
 import { withIds } from '@/utils/withIds';
 import { PartyKeyValue } from './party-key-value';
 
+const useStyles = makeStyles({
+	rowFlex: {
+		display: 'flex',
+		alignItems: 'flex-end',
+		gap: '1rem'
+	},
+	columnGap: {
+		display: 'flex',
+		flexDirection: 'column',
+		gap: '1rem'
+	}
+});
+
 export const PartiesContractTab = () => {
+	const _styles = useStyles();
+
 	const [partyA, setPartyA] = useState(
 		withIds([
 			{ key: '**PARTY A (BUYER)**', value: '', canDelete: false },
@@ -35,28 +50,20 @@ export const PartiesContractTab = () => {
 		])
 	);
 
-	const [contractInfo, setContractInfo] = useState(
-		withIds([
-			{ key: 'No.', value: '' },
-			{ key: '**Project**', value: '' },
-			{ key: '**Item**', value: '' },
-			{ key: '**Location**', value: '' }
-		])
-	);
+	// const [contractInfo, setContractInfo] = useState(
+	// 	withIds([
+	// 		{ key: 'No.', value: '' },
+	// 		{ key: '**Project**', value: '' },
+	// 		{ key: '**Item**', value: '' },
+	// 		{ key: '**Location**', value: '' }
+	// 	])
+	// );
 
 	return (
-		<div>
-			<Card>
-				<PartyKeyValue disableAppend title='CONTRACT INFORMATION' value={contractInfo} onChange={setContractInfo} />
-			</Card>
-
-			<br />
-
+		<div className={_styles.columnGap}>
 			<Card>
 				<PartyKeyValue title='A' value={partyA} onChange={setPartyA} />
 			</Card>
-
-			<br />
 
 			<Card>
 				<PartyKeyValue title='B' value={partyB} onChange={setPartyB} />

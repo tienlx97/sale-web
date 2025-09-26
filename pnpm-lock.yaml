@@ -14,6 +14,12 @@ importers:
       '@fluentui/react-datepicker-compat':
         specifier: ^0.6.14
         version: 0.6.14(@types/react-dom@18.3.7(@types/react@18.3.24))(@types/react@18.3.24)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(scheduler@0.26.0)
+      '@fluentui/react-motion-components-preview':
+        specifier: ^0.10.0
+        version: 0.10.0(@types/react-dom@18.3.7(@types/react@18.3.24))(@types/react@18.3.24)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      immer:
+        specifier: ^10.1.3
+        version: 10.1.3
       react:
         specifier: ^19.1.1
         version: 19.1.1
@@ -1055,6 +1061,9 @@ packages:
 
   html-entities@2.6.0:
     resolution: {integrity: sha512-kig+rMn/QOVRvr7c86gQ8lWXq+Hkv6CbAH1hLu+RG338StTpE8Z0b44SDVaqVu7HGKf27frdmUYEs9hTUX/cLQ==}
+
+  immer@10.1.3:
+    resolution: {integrity: sha512-tmjF/k8QDKydUlm3mZU+tjM6zeq9/fFpPqH9SzWmBnVVKsPBg/V66qsMwb3/Bo90cgUN+ghdVBess+hPsxUyRw==}
 
   jiti@2.6.0:
     resolution: {integrity: sha512-VXe6RjJkBPj0ohtqaO8vSWP3ZhAKo66fKrFNCll4BTcwljPLz03pCbaNKfzGP5MbrCYcbJ7v0nOYYwUzTEIdXQ==}
@@ -2911,6 +2920,8 @@ snapshots:
   gensync@1.0.0-beta.2: {}
 
   html-entities@2.6.0: {}
+
+  immer@10.1.3: {}
 
   jiti@2.6.0: {}
 

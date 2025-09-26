@@ -2,10 +2,10 @@
 
 import { makeStyles, mergeClasses, Tab, TabList } from '@fluentui/react-components';
 import { useState } from 'react';
-import { ContractPeriodTab } from '@/features/contract/components/contract-period-tab';
-import { DateTab } from '@/features/contract/components/date-tab';
+import { CommercialTab } from '@/features/contract/components/commercial-tab';
+import { GeneralTab } from '@/features/contract/components/general';
 import { PartiesContractTab } from '@/features/contract/components/parties-tab';
-import { PaymentTab } from '@/features/contract/components/payment-tab';
+import { ScopeDurationTab } from '@/features/contract/components/scope-duration-tab';
 
 const useStyles = makeStyles({
 	root: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 export const ContractPage = () => {
 	const _styles = useStyles();
 
-	const [selectedValue, setSelectedValue] = useState('date-tab');
+	const [selectedValue, setSelectedValue] = useState('general-tab');
 
 	const onTabSelect = (_, data) => {
 		setSelectedValue(data.value);
@@ -33,49 +33,41 @@ export const ContractPage = () => {
 		<div>
 			<div className={_styles.root}>
 				<TabList selectedValue={selectedValue} onTabSelect={onTabSelect}>
-					<Tab id='date-tab' value='date-tab'>
-						Date
+					<Tab id='general-tab' value='general-tab'>
+						General
 					</Tab>
 					<Tab id='parties-contract-tab' value='parties-contract-tab'>
 						Parties and Contract
 					</Tab>
 
-					<Tab id='contract-period-tab' value='contract-period-tab'>
-						Contract Period
+					<Tab id='scope-and-duration-tab' value='scope-and-duration-tab'>
+						Scope and Duration
 					</Tab>
 
-					<Tab id='payment-tab' value='payment-tab'>
-						Payment
+					<Tab id='commercial-tab' value='commercial-tab'>
+						Commercial
 					</Tab>
+
+					{/* <Tab id='payment-tab' value='payment-tab'>
+						Payment
+					</Tab> */}
 				</TabList>
 
-				<div className={mergeClasses(_styles.panel, selectedValue !== 'date-tab' && _styles.hidden)}>
-					<DateTab />
+				<div className={mergeClasses(_styles.panel, selectedValue !== 'general-tab' && _styles.hidden)}>
+					<GeneralTab />
 				</div>
 
 				<div className={mergeClasses(_styles.panel, selectedValue !== 'parties-contract-tab' && _styles.hidden)}>
 					<PartiesContractTab />
 				</div>
 
-				<div className={mergeClasses(_styles.panel, selectedValue !== 'contract-period-tab' && _styles.hidden)}>
-					<ContractPeriodTab />
+				<div className={mergeClasses(_styles.panel, selectedValue !== 'scope-and-duration-tab' && _styles.hidden)}>
+					<ScopeDurationTab />
 				</div>
 
-				<div className={mergeClasses(_styles.panel, selectedValue !== 'payment-tab' && _styles.hidden)}>
-					<PaymentTab />
+				<div className={mergeClasses(_styles.panel, selectedValue !== 'commercial-tab' && _styles.hidden)}>
+					<CommercialTab />
 				</div>
-
-				{/* <SignedDate />
-				<Divider appearance='strong' />
-				<QuotationDate />
-				<Divider appearance='strong' />
-				<ConstractInformation />
-				<Divider appearance='strong' />
-				<Parties />
-				<Divider appearance='strong' />
-				<PeriodPhraseList />
-				<Divider appearance='strong' />
-				<Payments /> */}
 			</div>
 		</div>
 	);
