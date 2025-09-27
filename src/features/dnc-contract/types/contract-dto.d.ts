@@ -46,7 +46,8 @@ export type Payment = {
 	title: string; // "FIRST PAYMENT" (store text label if you like)
 	percent: number; // 0..100
 	days: number; // calendar days
-	term: string; // 'Telegraphic Transfer (T/T)'
+	term: string; // 'Telegraphic Transfer (T/T)',
+	format: any;
 };
 
 export type DocumentRequirement = BlockItem;
@@ -79,9 +80,6 @@ export type ContractDTO = {
 	};
 
 	projectWorkScope: {
-		name: BlockItem;
-		item: BlockItem;
-		location: BlockItem;
 		volumeOfWork: BlockItem;
 	};
 
@@ -108,4 +106,33 @@ export type ContractDTO = {
 
 	payments: Payment[]; // main
 	appendPayments: Payment[]; // extra
+};
+
+//
+
+type PatchFn = (draft: Contract) => void;
+
+type Action =
+	| { type: 'contract/replace'; next: Contract }
+	| { type: 'contract/patch'; patch: PatchFn }
+	// payments
+	| { type: 'payments/add'; where: 'payments' | 'appendPayments'; template?: Partial<Payment> }
+	| { type: 'payments/remove'; where: 'payments' | 'appendPayments'; id: string }
+	| { type: 'payments/patch'; where: 'payments' | 'appendPayments'; id: string; patch: (p: Payment) => void }
+	// commercial documents (array of {key,value})
+	| { type: 'docs/add'; row?: { key: string; value: string } }
+	| { type: 'docs/remove'; index: number }
+	| { type: 'docs/patch'; index: number; patch: (row: { key: string; value: string }) => void }
+	// party optional rows (free-form KV list per side)
+	| { type: 'partyOptional/add'; side: PartySide; row?: PartyKV }
+	| { type: 'partyOptional/remove'; side: PartySide; id: string }
+	| { type: 'partyOptional/patch'; side: PartySide; id: string; patch: (row: PartyKV) => void };
+
+type Ctx = {
+	state: Contract;
+	dispatch: React.Dispatch<Action>;
+	// sugar helpers
+	patch: (fn: PatchFn) => void;
+	addPayment: (where?: 'payments' | 'appendPayments', template?: Partial<Payment>) => void;
+	removePayment: (where: 'payments' | 'appendPayments', id: string) => void;
 };

@@ -6,8 +6,10 @@ export function reducer(state, action) {
 	return produce(state, draft => {
 		switch (action.type) {
 			case 'contract/set':
+			case 'contract/patch': {
 				action.patch(draft);
 				break;
+			}
 			case 'payment/add': {
 				const list = action.where === 'core' ? draft.payments : draft.appendPayments;
 				const idx = list.length;
