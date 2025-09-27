@@ -1,28 +1,12 @@
-import { Button, Card, Field, Input, makeStyles, Text, Textarea } from '@fluentui/react-components';
+import { Button, Card, Field, Input, Text, Textarea } from '@fluentui/react-components';
 import { useMemo } from 'react';
-import { computePaymentValue, daysText, moneyInWords, percentText, prettyMoney } from './formatters';
+import { moneyInWords } from '@/utils/toWord';
+import { computePaymentValue, daysText, percentText, prettyMoney } from './formatters';
+import { useStyles } from './styles';
 import { useNumericField } from './useNumericField';
 
-const useStyles = makeStyles({
-	rowFlex: {
-		display: 'flex',
-		alignItems: 'flex-start',
-		gap: '0.5rem',
-		flexDirection: 'row',
-		flexWrap: 'wrap'
-	},
-	full: { width: '100%' },
-	headerRow: {
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'space-between',
-		gap: '0.5rem',
-		marginBottom: '0.25rem'
-	}
-});
-
 export const PaymentItem = ({ payment, where, currency, contractAmount, onPatch, onRemove }) => {
-	const s = useStyles();
+	const _style = useStyles();
 
 	const percentField = useNumericField(payment.percent, n =>
 		onPatch(d => {
@@ -50,7 +34,7 @@ export const PaymentItem = ({ payment, where, currency, contractAmount, onPatch,
 
 	return (
 		<Card>
-			<div className={s.headerRow}>
+			<div className={_style.headerRow}>
 				<Text size={400} weight='semibold'>
 					{payment.title}
 				</Text>
@@ -65,7 +49,7 @@ export const PaymentItem = ({ payment, where, currency, contractAmount, onPatch,
 				<Text size={400} weight='semibold'>
 					Percent
 				</Text>
-				<div className={s.rowFlex}>
+				<div className={_style.rowFlex}>
 					<Field style={{ width: 240 }} label='Percent' size='small'>
 						<Input
 							type='text'
@@ -77,7 +61,7 @@ export const PaymentItem = ({ payment, where, currency, contractAmount, onPatch,
 							onBlur={percentField.onBlur}
 						/>
 					</Field>
-					<Field className={s.full} label='Percent (derived text)' size='small'>
+					<Field className={_style.full} label='Percent (derived text)' size='small'>
 						<Input size='small' value={derived.percentWords} disabled />
 					</Field>
 				</div>
@@ -87,7 +71,7 @@ export const PaymentItem = ({ payment, where, currency, contractAmount, onPatch,
 				<Text size={400} weight='semibold'>
 					Payment Date
 				</Text>
-				<div className={s.rowFlex}>
+				<div className={_style.rowFlex}>
 					<Field style={{ width: 240 }} label='Days' size='small'>
 						<Input
 							type='text'
@@ -98,7 +82,7 @@ export const PaymentItem = ({ payment, where, currency, contractAmount, onPatch,
 							onBlur={daysField.onBlur}
 						/>
 					</Field>
-					<Field className={s.full} label='Days (derived text)' size='small'>
+					<Field className={_style.full} label='Days (derived text)' size='small'>
 						<Input size='small' value={derived.daysWords} disabled />
 					</Field>
 				</div>
@@ -108,13 +92,13 @@ export const PaymentItem = ({ payment, where, currency, contractAmount, onPatch,
 				<Text size={400} weight='semibold'>
 					Payment Value (derived)
 				</Text>
-				<div className={s.rowFlex}>
-					<Field className={s.full} label='Amount' size='small'>
+				<div className={_style.rowFlex}>
+					<Field className={_style.full} label='Amount' size='small'>
 						<Input size='small' value={derived.paymentValue} disabled />
 					</Field>
 				</div>
-				<div className={s.rowFlex}>
-					<Field className={s.full} label='Amount in words' size='small'>
+				<div className={_style.rowFlex}>
+					<Field className={_style.full} label='Amount in words' size='small'>
 						<Textarea value={derived.paymentValueWords} disabled />
 					</Field>
 				</div>
@@ -124,8 +108,8 @@ export const PaymentItem = ({ payment, where, currency, contractAmount, onPatch,
 				<Text size={400} weight='semibold'>
 					Term
 				</Text>
-				<div className={s.rowFlex}>
-					<Field className={s.full} label='Payment term' size='small'>
+				<div className={_style.rowFlex}>
+					<Field className={_style.full} label='Payment term' size='small'>
 						<Input
 							size='small'
 							value={payment.term}
@@ -143,8 +127,8 @@ export const PaymentItem = ({ payment, where, currency, contractAmount, onPatch,
 				<Text size={400} weight='semibold'>
 					Templates (Optional)
 				</Text>
-				<div className={s.rowFlex}>
-					<Field className={s.full} label='paymentPercentText' size='small'>
+				<div className={_style.rowFlex}>
+					<Field className={_style.full} label='paymentPercentText' size='small'>
 						<Textarea
 							value={payment.format?.paymentPercentText ?? ''}
 							onChange={(_, d) =>
@@ -156,8 +140,8 @@ export const PaymentItem = ({ payment, where, currency, contractAmount, onPatch,
 						/>
 					</Field>
 				</div>
-				<div className={s.rowFlex}>
-					<Field className={s.full} label='paymentValueText' size='small'>
+				<div className={_style.rowFlex}>
+					<Field className={_style.full} label='paymentValueText' size='small'>
 						<Textarea
 							value={payment.format?.paymentValueText ?? ''}
 							onChange={(_, d) =>
@@ -169,8 +153,8 @@ export const PaymentItem = ({ payment, where, currency, contractAmount, onPatch,
 						/>
 					</Field>
 				</div>
-				<div className={s.rowFlex}>
-					<Field className={s.full} label='termText' size='small'>
+				<div className={_style.rowFlex}>
+					<Field className={_style.full} label='termText' size='small'>
 						<Textarea
 							value={payment.format?.termText ?? ''}
 							onChange={(_, d) =>
@@ -182,8 +166,8 @@ export const PaymentItem = ({ payment, where, currency, contractAmount, onPatch,
 						/>
 					</Field>
 				</div>
-				<div className={s.rowFlex}>
-					<Field className={s.full} label='endText' size='small'>
+				<div className={_style.rowFlex}>
+					<Field className={_style.full} label='endText' size='small'>
 						<Textarea
 							value={payment.format?.endText ?? ''}
 							onChange={(_, d) =>

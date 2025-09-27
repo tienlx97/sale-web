@@ -1,6 +1,7 @@
 import { Button, Card, Field, Input, Text, Textarea } from '@fluentui/react-components';
 import { useReducer } from 'react';
-import { moneyInWords, prettyMoney } from './formatters';
+import { moneyInWords } from '@/utils/toWord';
+import { prettyMoney } from './formatters';
 import { initialContract } from './initialState';
 import { PaymentItem } from './payment-item';
 import { reducer } from './store';
@@ -8,7 +9,7 @@ import { useStyles } from './styles';
 import { useNumericField } from './useNumericField';
 
 export const CommercialTab = () => {
-	const s = useStyles();
+	const _style = useStyles();
 	const [state, dispatch] = useReducer(reducer, initialContract);
 
 	// contract amount field
@@ -22,13 +23,13 @@ export const CommercialTab = () => {
 	);
 
 	return (
-		<div className={s.column}>
+		<div className={_style.column}>
 			<Card>
 				<Text size={400} weight='semibold'>
 					CONTRACT VALUE
 				</Text>
 
-				<div className={s.rowFlex}>
+				<div className={_style.rowFlex}>
 					<Field style={{ width: 200 }} label='Currency' size='small'>
 						<Input
 							size='small'
@@ -55,19 +56,19 @@ export const CommercialTab = () => {
 					</Field>
 				</div>
 
-				<div className={s.rowFlex}>
-					<Field className={s.full} label='Amount (pretty)' size='small'>
+				<div className={_style.rowFlex}>
+					<Field className={_style.full} label='Amount (pretty)' size='small'>
 						<Input size='small' value={prettyMoney(state.amount, state.currency)} disabled />
 					</Field>
 				</div>
 
-				<div className={s.rowFlex}>
-					<Field className={s.full} label='Amount in words' size='small'>
+				<div className={_style.rowFlex}>
+					<Field className={_style.full} label='Amount in words' size='small'>
 						<Textarea value={moneyInWords(state.amount, state.currency)} disabled />
 					</Field>
 				</div>
 
-				<div className={s.rowFlex}>
+				<div className={_style.rowFlex}>
 					<Field style={{ width: 160 }} label='Incoterm Year' size='small'>
 						<Input
 							size='small'
@@ -98,8 +99,8 @@ export const CommercialTab = () => {
 					</Field>
 				</div>
 
-				<div className={s.rowFlex}>
-					<Field className={s.full} label='Location' size='small'>
+				<div className={_style.rowFlex}>
+					<Field className={_style.full} label='Location' size='small'>
 						<Input
 							size='small'
 							value={state.location}
@@ -140,7 +141,7 @@ export const CommercialTab = () => {
 				/>
 			))}
 
-			<div className={s.rowFlex}>
+			<div className={_style.rowFlex}>
 				<Button appearance='primary' onClick={() => dispatch({ type: 'payment/add', where: 'append' })}>
 					Add append payment
 				</Button>

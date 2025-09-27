@@ -40,6 +40,11 @@ export function reducer(state, action) {
 				if (p) action.patch(p);
 				break;
 			}
+
+			case 'parties/set': {
+				draft.parties[action.side] = action.next;
+				break;
+			}
 		}
 	});
 }
