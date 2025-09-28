@@ -43,6 +43,7 @@ const randomId = () => globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Mat
 
 export const PartyKeyValue = ({
 	title,
+	titleSize = 'regular',
 	value,
 	onChange,
 	disableAppend,
@@ -96,7 +97,7 @@ export const PartyKeyValue = ({
 	return (
 		<div>
 			<div className={_styles.sectionHeader}>
-				<Text size={400} weight='semibold'>
+				<Text size={titleSize === 'regular' ? 400 : 500} weight={titleSize === 'regular' ? 'semibold' : 'bold'}>
 					{title}
 				</Text>
 				<div className={_styles.rowToolbar}>

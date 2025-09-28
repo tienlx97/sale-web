@@ -4,9 +4,9 @@ export const initialContract = {
 	quotationDate: '',
 	info: {
 		no: { key: 'No', value: '' },
-		project: { key: '**Project**', value: '', markup: { caplockValue: true } },
-		item: { key: '**Item**', value: 'STEEL STRUCTURE', markup: { caplockValue: true } },
-		location: { key: '**Location**', value: '', markup: { caplockValue: true } }
+		project: { key: '**Project**', value: '', markup: { caplockValue: true, boldValue: true } },
+		item: { key: '**Item**', value: 'STEEL STRUCTURE', markup: { caplockValue: true, boldValue: true } },
+		location: { key: '**Location**', value: '', markup: { caplockValue: true, boldValue: true } }
 	},
 	parties: {
 		A: {
@@ -48,10 +48,10 @@ export const initialContract = {
 		approval: { qty: 1, unit: 'week', format: "allocation for customer's (Party A) approval." },
 		shopDrawing: { qty: 1, unit: 'week', format: 'for preparation of shop drawings.' },
 		fabrication: { qty: 6, unit: 'weeks', format: 'fabrication period reckoned from the date the approval drawings are approved.' },
-		transportation: { qty: 1, unit: 'weeks', format: 'for transportation from factory to {{transportationLocation}}' }
+		transportation: { qty: 2, unit: 'weeks', format: 'for transportation from factory to {{transportationLocation}}' }
 	},
 	commercial: {
-		incoterm: { rule: 'CIF', year: '2010', location: 'Bangkok Port - Thailand' },
+		incoterm: { rule: 'CIF', year: '2010', location: '' },
 		contractValue: { currencyCode: 'USD', value: 0 },
 		bank: {
 			beneficiary: 'DAI NGHIA INDUSTRIAL MECHANICS CO., LTD',

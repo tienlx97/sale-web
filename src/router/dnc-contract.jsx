@@ -1,9 +1,14 @@
+import { CommercialTab } from '@/features/dnc-contract/components/commercial-tab';
 import { PartyKeyValue } from '@/features/dnc-contract/components/party-key-value';
+import { PaymentsTab } from '@/features/dnc-contract/components/payments-tab';
+import { PeriodPhraseItem } from '@/features/dnc-contract/components/period-phrase-item';
+import { ScopeDurationTab } from '@/features/dnc-contract/components/scope-duration-tab';
 import { useContract } from '@/features/dnc-contract/providers/contract-provider';
 import { kvToPartyBlock, partyBlockToKV } from '@/features/dnc-contract/store/party-adapter';
+import { infoToKV, kvToInfo } from '@/features/dnc-contract/store/project-info-adapter';
 import { Text, Field, makeStyles, Card, Input } from '@fluentui/react-components';
 import { DatePicker } from '@fluentui/react-datepicker-compat';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 const useStyles = makeStyles({
 	root: {
@@ -26,6 +31,15 @@ const useStyles = makeStyles({
 		gap: '1rem'
 	}
 });
+
+const PERIOD_ORDER = ['preparation', 'approval', 'shopDrawing', 'fabrication', 'transportation'];
+const LABELS = {
+	preparation: 'Preparation',
+	approval: 'Approval',
+	shopDrawing: 'Shop Drawing',
+	fabrication: 'Fabrication',
+	transportation: 'Transportation'
+};
 
 // ------- small date helpers (ISO <-> Date; parse typed input) -------
 const dateToISO = d => (d ? new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())).toISOString().slice(0, 10) : '');
@@ -63,17 +77,33 @@ export const DNCContractPage = () => {
 	const signedDate = isoToDate(signedISO);
 	const quoteDate = isoToDate(quoteISO);
 
-	const rowsA = useMemo(() => partyBlockToKV('A', state.parties.A), [state.parties.A]);
-	const rowsB = useMemo(() => partyBlockToKV('B', state.parties.B), [state.parties.B]);
+	const partyRowsA = useMemo(() => partyBlockToKV('A', state.parties.A), [state.parties.A]);
+	const partyRowsB = useMemo(() => partyBlockToKV('B', state.parties.B), [state.parties.B]);
 
-	console.log({ parties: state.parties });
+	const infoRows = useMemo(() => infoToKV(state.info), [state.info]);
+
+	const setPeriod = useCallback(
+		(key, next) => {
+			patch(d => {
+				const qtyNum = typeof next.qty === 'string' && next.qty.trim() !== '' ? Number(next.qty) : next.qty;
+				d.periods[key] = {
+					qty: qtyNum ?? d.periods[key].qty,
+					unit: next.unit ?? d.periods[key].unit,
+					format: next.format ?? d.periods[key].format
+				};
+			});
+		},
+		[patch]
+	);
+
+	console.log({ parties: state });
 
 	return (
 		<div>
 			<div className={_styles.root}>
 				<div className={_styles.columnGap}>
 					<Card>
-						<Text weight='semibold' size={400}>
+						<Text weight='bold' size={500}>
 							GENERAL
 						</Text>
 
@@ -140,14 +170,14 @@ export const DNCContractPage = () => {
 					</Card>
 
 					<Card>
-						<Text weight='semibold' size={400}>
+						<Text weight='bold' size={500}>
 							PARTIES
 						</Text>
 
 						<Card>
 							<PartyKeyValue
 								title='A'
-								value={rowsA}
+								value={partyRowsA}
 								onChange={nextRows =>
 									patch(d => {
 										d.parties.A = kvToPartyBlock('A', nextRows, d.parties.A);
@@ -163,7 +193,7 @@ export const DNCContractPage = () => {
 						<Card>
 							<PartyKeyValue
 								title='B'
-								value={rowsB}
+								value={partyRowsB}
 								onChange={nextRows =>
 									patch(d => {
 										d.parties.B = kvToPartyBlock('B', nextRows, d.parties.B);
@@ -174,6 +204,33 @@ export const DNCContractPage = () => {
 							/>
 						</Card>
 					</Card>
+
+					<div className={_styles.columnGap}>
+						<Card>
+							<PartyKeyValue
+								titleSize='large'
+								title='PROJECT INFO'
+								value={infoRows}
+								onChange={nextRows =>
+									patch(d => {
+										d.info = kvToInfo(nextRows, d.info);
+									})
+								}
+								disableAppend={true}
+								styles={{ key: 3, value: 7 }}
+							/>
+						</Card>
+					</div>
+
+					<div className={_styles.columnGap}>
+						<ScopeDurationTab />
+					</div>
+					<div className={_styles.columnGap}>
+						<CommercialTab />
+					</div>
+					<div className={_styles.columnGap}>
+						<PaymentsTab />
+					</div>
 				</div>
 			</div>
 		</div>
