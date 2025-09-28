@@ -1,4 +1,4 @@
-import { reducer } from '@/features/contract/components/commercial-tab/store';
+import { reducer } from '@/features/dnc-contract/store/store';
 
 import { useContext, useReducer } from 'react';
 import { initialContract } from '../store/contract-store';

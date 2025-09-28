@@ -44,6 +44,8 @@ export const DNCContractPage = () => {
 
 	const { state } = useContract();
 
+	console.log({ state });
+
 	const saveMutation = useMutation({
 		// biome-ignore lint/suspicious/useAwait: <explanation>
 		mutationFn: async () => {
@@ -93,6 +95,10 @@ export const DNCContractPage = () => {
 
 						<Tab id='PaymentsTab' value='PaymentsTab'>
 							Payments
+						</Tab>
+
+						<Tab id='FormatTab' value='FormatTab'>
+							Format
 						</Tab>
 					</TabList>
 

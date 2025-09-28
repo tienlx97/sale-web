@@ -20,7 +20,7 @@ export const initialContract = {
 		B: {
 			title: '(Hereinafter referred to as **Party B**)',
 			company: {
-				key: '**PARTY B (CONTRACTOR)**',
+				key: '**PARTY B (SUPPLIER)**',
 				value: 'DAI NGHIA INDUSTRIAL MECHANICS CO., LTD',
 				markup: { caplockValue: true, boldValue: true }
 			},
@@ -54,12 +54,36 @@ export const initialContract = {
 		incoterm: { rule: 'CIF', year: '2010', location: '' },
 		contractValue: { currencyCode: 'USD', value: 0 },
 		bank: {
-			beneficiary: 'DAI NGHIA INDUSTRIAL MECHANICS CO., LTD',
-			accountNo: '1032407684',
-			bankName: 'Joint Stock Commercial Bank for Foreign Trade of Viet Nam',
-			branch: 'Tan Binh',
-			address: '108 Tay Thanh Street, Tay Thanh Ward, Ho Chi Minh City, Vietnam',
-			swift: 'BFTVVNVX044'
+			beneficiary: {
+				key: 'Beneficiary',
+				value: 'DAI NGHIA INDUSTRIAL MECHANICS CO., LTD',
+				markup: { boldValue: true }
+			},
+			accountNo: {
+				key: 'Bank account No.',
+				value: '1032407684',
+				markup: { boldValue: true }
+			},
+			bankName: {
+				key: 'Bank',
+				value: 'Joint Stock Commercial Bank for Foreign Trade of Viet Nam',
+				markup: { boldValue: true }
+			},
+			branch: {
+				key: 'Branch',
+				value: 'Tan Binh',
+				markup: { boldValue: true }
+			},
+			address: {
+				key: 'Address',
+				value: '108 Tay Thanh Street, Tay Thanh Ward, Ho Chi Minh City, Vietnam',
+				markup: { boldValue: true }
+			},
+			swift: {
+				key: 'SWIFT Code',
+				value: 'BFTVVNVX044',
+				markup: { boldValue: true }
+			}
 		},
 		documents: [
 			{ key: '- Commercial Invoice', value: '01 original(s) electronic' },
@@ -81,9 +105,10 @@ export const initialContract = {
 			days: 7,
 			term: 'Telegraphic Transfer (T/T)',
 			format: {
-				paymentPercentText: 'First Payment: Party A shall pay {{percent}} of the Contract Value.',
-				paymentValueText: '{{currency}} {{contractValue}} x {{percent}} = {{currency}} {{paymentValue}}',
-				termText: 'by {{term}} within {{days}} calendar days from the date of Contract signing',
+				paymentPercentText: 'First Payment: Party A shall pay {{percentInWords}} ({{percent}}%) of the Contract Value.',
+				paymentValueText: '{{currency}} {{contractValue}} x {{percent}}% = {{currency}} {{paymentValue}}',
+				moneyTextInword: `*(In words: {{paymentInWords}})*`,
+				termText: 'by {{term}} within {{daysInWords}} ({{days}}) calendar days from the date of Contract signing',
 				endText: 'Receipt of this payment shall be a condition precedent for Party B to commence fabrication, subject to drawing approval.'
 			}
 		},
@@ -94,10 +119,11 @@ export const initialContract = {
 			days: 7,
 			term: 'Telegraphic Transfer (T/T)',
 			format: {
-				paymentPercentText: 'Second Payment: Party A shall pay {{percent}} of the Contract Value.',
-				paymentValueText: '{{currency}} {{contractValue}} x {{percent}} = {{currency}} {{paymentValue}}',
+				paymentPercentText: 'Second Payment: Party A shall pay {{percentInWords}} ({{percent}}%) of the Contract Value.',
+				paymentValueText: '{{currency}} {{contractValue}} x {{percent}}% = {{currency}} {{paymentValue}}',
+				moneyTextInword: `*(In words: {{paymentInWords}})*`,
 				termText:
-					'by {{term}} within {{days}} calendar days after completion of inspection at Party B’s factory in Vietnam and prior to shipment release.'
+					'by {{term}} within {{daysInWords}} ({{days}}) calendar days after completion of inspection at Party B’s factory in Vietnam and prior to shipment release.'
 			}
 		}
 	],

@@ -15,40 +15,14 @@ const useStyles = makeStyles({
 const stripInteger = s => String(s ?? '').replace(/[^\d]/g, '');
 const clampPercent = n => Math.max(0, Math.min(100, n));
 
-const groupThousands = x => new Intl.NumberFormat('en-US', { maximumFractionDigits: 6 }).format(x);
-
 const genId = () => globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}`;
-
-function buildPreview(p, currency, contractValue) {
-	const percent = `${p.percent}%`;
-	const contractValueFmt = groupThousands(contractValue);
-	const paymentValue = groupThousands((contractValue * (p.percent || 0)) / 100);
-
-	const dict = {
-		percent,
-		currency,
-		contractValue: contractValueFmt,
-		paymentValue,
-		term: p.term ?? '',
-		days: String(p.days ?? '')
-	};
-
-	const repl = tmpl => tmpl?.replace(/\{\{\s*([a-zA-Z0-9_]+)\s*\}\}/g, (_, k) => dict[k] ?? '');
-
-	return {
-		percentLine: repl(p.format.paymentPercentText || ''),
-		valueLine: repl(p.format.paymentValueText || ''),
-		termLine: repl(p.format.termText || ''),
-		endLine: p.format.endText ? repl(p.format.endText) : ''
-	};
-}
 
 function makeAppendPaymentFormat(title, idx) {
 	return {
-		paymentPercentText: `${title}: Party A shall pay {{contract.paymentAppend.[${idx}].percent.text}} ({{contract.paymentAppend.[${idx}].percent.num}}%) of the Contract Value:`,
-		paymentValueText: `{{contract.money.unit}} {{contractCurrencyFormat}} x {{contract.paymentAppend.[${idx}].percent.num}}% = {{contract.money.unit}} {{appendPaymentValue}}`,
-		moneyTextInword: `*(In words: {{contract.paymentAppend.[${idx}].money.text}})*`,
-		termText: `by {{contract.paymentAppend.[${idx}].term}} ...`,
+		paymentPercentText: `${title}: Party A shall pay {{percentInWords}} ({{appendPayments.[${idx}].percent}}%) of the Contract Value:`,
+		paymentValueText: `{{commercial.contractValue.currencyCode}} {{contractValue}} x {{appendPayments.[${idx}].percent}}% = {{commercial.contractValue.currencyCode}} {{paymentValue}}`,
+		moneyTextInword: `*(In words: {{paymentInWordsValue}})*`,
+		termText: `by {{appendPayments.[${idx}].term}}`,
 		endText: ''
 	};
 }
@@ -56,7 +30,6 @@ function makeAppendPaymentFormat(title, idx) {
 /* --------- PaymentCard (single payment editor) --------- */
 const PaymentCard = ({ where, data, canRemove, onPatch, onRemove, currency, contractValue, indexLabel }) => {
 	const s = useStyles();
-	const preview = buildPreview(data, currency, contractValue);
 
 	return (
 		<Card className={s.column}>

@@ -218,10 +218,10 @@ export const CommercialTab = () => {
 							<Input
 								disabled
 								size='small'
-								value={bank.beneficiary}
+								value={bank.beneficiary.value}
 								onChange={(_, d) =>
 									patch(dr => {
-										dr.commercial.bank.beneficiary = d.value;
+										dr.commercial.bank.beneficiary.value = d.value;
 									})
 								}
 							/>
@@ -230,10 +230,10 @@ export const CommercialTab = () => {
 							<Input
 								disabled
 								size='small'
-								value={bank.accountNo}
+								value={bank.accountNo.value}
 								onChange={(_, d) =>
 									patch(dr => {
-										dr.commercial.bank.accountNo = d.value;
+										dr.commercial.bank.accountNo.value = d.value;
 									})
 								}
 							/>
@@ -245,10 +245,10 @@ export const CommercialTab = () => {
 							<Input
 								disabled
 								size='small'
-								value={bank.bankName}
+								value={bank.bankName.value}
 								onChange={(_, d) =>
 									patch(dr => {
-										dr.commercial.bank.bankName = d.value;
+										dr.commercial.bank.bankName.value = d.value;
 									})
 								}
 							/>
@@ -257,10 +257,10 @@ export const CommercialTab = () => {
 							<Input
 								disabled
 								size='small'
-								value={bank.branch}
+								value={bank.branch.value}
 								onChange={(_, d) =>
 									patch(dr => {
-										dr.commercial.bank.branch = d.value;
+										dr.commercial.bank.branch.value = d.value;
 									})
 								}
 							/>
@@ -271,10 +271,10 @@ export const CommercialTab = () => {
 						<Textarea
 							disabled
 							resize='vertical'
-							value={bank.address}
+							value={bank.address.value}
 							onChange={(_, d) =>
 								patch(dr => {
-									dr.commercial.bank.address = d.value;
+									dr.commercial.bank.address.value = d.value;
 								})
 							}
 						/>
@@ -284,10 +284,10 @@ export const CommercialTab = () => {
 						<Input
 							disabled
 							size='small'
-							value={bank.swift}
+							value={bank.swift.value}
 							onChange={(_, d) =>
 								patch(dr => {
-									dr.commercial.bank.swift = d.value.toUpperCase();
+									dr.commercial.bank.swift.value = d.value.toUpperCase();
 								})
 							}
 						/>

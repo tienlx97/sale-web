@@ -1,6 +1,6 @@
 // api/contracts.ts
 export async function sendContract(payload) {
-	const res = await fetch('http://localhost:3000/api/contracts', {
+	const res = await fetch('http://localhost:3000/v1/contract', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(payload)

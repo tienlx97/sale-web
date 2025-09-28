@@ -1,6 +1,10 @@
 // store.ts
 import { produce } from 'immer';
-import { genId, ordinal } from './helper';
+
+export const genId = () => crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}`;
+
+export const ordinal = n =>
+	['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh', 'Eighth', 'Ninth', 'Tenth'][n] ?? `Payment ${n + 1}`;
 
 export function reducer(state, action) {
 	return produce(state, draft => {
