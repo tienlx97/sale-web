@@ -6,14 +6,6 @@ import { makeStyles } from '@fluentui/react-components';
 import { Text } from '@fluentui/react-components';
 
 const useStyles = makeStyles({
-	root: {
-		maxWidth: '800px',
-		width: '100%',
-		display: 'flex',
-		flexDirection: 'column',
-		gap: '1rem',
-		margin: 'auto'
-	},
 	rowFlex: {
 		display: 'flex',
 		alignItems: 'flex-end',
