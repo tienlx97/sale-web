@@ -41,7 +41,7 @@ const useStyles = makeStyles({
 
 const randomId = () => globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}`;
 
-export const PartyKeyValue = ({
+export const ItemKeyValue = ({
 	title,
 	titleSize = 'regular',
 	value,
@@ -136,6 +136,7 @@ export const PartyKeyValue = ({
 									resize='vertical' // cho phép kéo cao
 									rows={3} // mặc định 3 dòng
 									value={item.value}
+									placeholder={rawItem?.placeholder}
 									onChange={(_, data) => editField(item.id, 'value', data.value)}
 									style={{
 										fontWeight: item.markup.boldValue ? 600 : 400,
@@ -146,6 +147,7 @@ export const PartyKeyValue = ({
 								<Input
 									className={_styles.controlFull}
 									size='small'
+									placeholder={rawItem?.placeholder}
 									value={item.value}
 									onChange={(_, data) => editField(item.id, 'value', data.value)}
 									style={{

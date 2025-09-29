@@ -3,10 +3,10 @@ export const initialContract = {
 	signDate: '',
 	quotationDate: '',
 	info: {
-		no: { key: 'No', value: '' },
-		project: { key: '**Project**', value: '', markup: { caplockValue: true, boldValue: true } },
-		item: { key: '**Item**', value: 'STEEL STRUCTURE', markup: { caplockValue: true, boldValue: true } },
-		location: { key: '**Location**', value: '', markup: { caplockValue: true, boldValue: true } }
+		no: { key: 'No', value: '', placeholder: 'ex: 25KCT21', markup: { boldKey: true, caplockValue: true, boldValue: true } },
+		project: { key: 'Project', placeholder: 'ex: WH30x5', value: '', markup: { boldKey: true, caplockValue: true, boldValue: true } },
+		item: { key: 'Item', value: 'STEEL STRUCTURE', markup: { boldKey: true, caplockValue: true, boldValue: true } },
+		location: { key: 'Location', placeholder: 'ex: THAILAND', value: '', markup: { boldKey: true, caplockValue: true, boldValue: true } }
 	},
 	parties: {
 		A: {

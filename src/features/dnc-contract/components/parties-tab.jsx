@@ -1,10 +1,8 @@
-import { Card } from '@fluentui/react-components';
-import { PartyKeyValue } from './party-key-value';
+import { Card, makeStyles, Text } from '@fluentui/react-components';
 import { useMemo } from 'react';
-import { kvToPartyBlock, partyBlockToKV } from '../store/party-adapter';
 import { useContract } from '../providers/contract-provider';
-import { Text } from '@fluentui/react-components';
-import { makeStyles } from '@fluentui/react-components';
+import { kvToPartyBlock, partyBlockToKV } from '../store/party-adapter';
+import { ItemKeyValue } from './item-key-value';
 
 const useStyles = makeStyles({
 	rowFlex: {
@@ -34,7 +32,7 @@ export const PartiesTab = () => {
 			</Text>
 
 			<Card>
-				<PartyKeyValue
+				<ItemKeyValue
 					title='A'
 					value={partyRowsA}
 					onChange={nextRows =>
@@ -50,7 +48,7 @@ export const PartiesTab = () => {
 			</Card>
 
 			<Card>
-				<PartyKeyValue
+				<ItemKeyValue
 					title='B'
 					value={partyRowsB}
 					onChange={nextRows =>

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useContract } from '@/features/dnc-contract/providers/contract-provider';
 import { toWords } from '@/utils/toWord';
 import { INCOTERMS_RULES } from '../constants/example-data';
-import { PartyKeyValue } from './party-key-value';
+import { ItemKeyValue } from './item-key-value';
 
 const useStyles = makeStyles({
 	column: { display: 'flex', flexDirection: 'column', gap: '1rem' },
@@ -147,10 +147,7 @@ export const CommercialTab = () => {
 							onOptionSelect={(_, d) => {
 								patch(dr => {
 									dr.commercial.incoterm.rule = d.optionValue;
-									if (d.optionValue === 'DDP') {
-										// POD = Location khi là DDP
-										dr.commercial.pod = dr.commercial.incoterm.location ?? '';
-									}
+									dr.commercial.pod = dr.commercial.incoterm.location;
 								});
 							}}
 							placeholder='Select Incoterm rule'
@@ -321,7 +318,7 @@ export const CommercialTab = () => {
 					<Text size={400} weight='semibold'>
 						REQUIRED DOCUMENTS
 					</Text>
-					<PartyKeyValue
+					<ItemKeyValue
 						title='Documents'
 						value={docRows}
 						disableAppend={false}
@@ -454,7 +451,6 @@ export const CommercialTab = () => {
 						<Field label='Port of Discharge (POD)' size='small' className={_styles.grow}>
 							<Input
 								size='small'
-								disabled={state.commercial.incoterm.rule === 'DDP'}
 								placeholder='ex: Bangkok Port - ThaiLand'
 								value={state.commercial.pod}
 								onChange={(_, d) =>
