@@ -1,7 +1,8 @@
+import { Card, Checkbox, Combobox, Field, Input, makeStyles, Option, Text, Textarea } from '@fluentui/react-components';
 import * as React from 'react';
-import { Card, Field, Input, makeStyles, Text, Textarea } from '@fluentui/react-components';
 import { useContract } from '@/features/dnc-contract/providers/contract-provider';
 import { toWords } from '@/utils/toWord';
+import { INCOTERMS_RULES } from '../constants/example-data';
 import { PartyKeyValue } from './party-key-value';
 
 const useStyles = makeStyles({
@@ -77,6 +78,9 @@ export const CommercialTab = () => {
 	const _styles = useStyles();
 	const { state, patch } = useContract();
 
+	const [sameBuyer1, setSameBuyer1] = React.useState(false);
+	const [sameBuyer2, setSameBuyer2] = React.useState(false);
+
 	const incoterm = state.commercial.incoterm;
 	const contractValue = state.commercial.contractValue;
 	const bank = state.commercial.bank;
@@ -129,7 +133,7 @@ export const CommercialTab = () => {
 
 				<div className={_styles.row}>
 					<Field label='Incoterm Rule' size='small' className={_styles.grow}>
-						<Input
+						{/* <Input
 							size='small'
 							value={incoterm.rule}
 							onChange={(_, d) =>
@@ -137,7 +141,24 @@ export const CommercialTab = () => {
 									dr.commercial.incoterm.rule = d.value;
 								})
 							}
-						/>
+						/> */}
+
+						<Combobox
+							onOptionSelect={(_, d) => {
+								patch(dr => {
+									dr.commercial.incoterm.rule = d.optionValue;
+									if (d.optionValue === 'DDP') {
+										// POD = Location khi là DDP
+										dr.commercial.pod = dr.commercial.incoterm.location ?? '';
+									}
+								});
+							}}
+							placeholder='Select Incoterm rule'
+						>
+							{INCOTERMS_RULES.map(rule => (
+								<Option key={rule}>{rule}</Option>
+							))}
+						</Combobox>
 					</Field>
 
 					<Field label='Incoterm Year' size='small' className={_styles.grow} style={{ width: 140 }}>
@@ -158,6 +179,7 @@ export const CommercialTab = () => {
 						<Textarea
 							resize='vertical'
 							size='small'
+							placeholder='ex: Bangkok Port - ThaiLand or deatail location'
 							value={incoterm.location}
 							onChange={(_, d) =>
 								patch(dr => {
@@ -321,6 +343,7 @@ export const CommercialTab = () => {
 					<div className={_styles.row}>
 						<Field label='Consignee - Company' size='small' className={_styles.grow}>
 							<Input
+								disabled={sameBuyer1}
 								size='small'
 								value={consignee.company}
 								onChange={(_, d) =>
@@ -330,9 +353,29 @@ export const CommercialTab = () => {
 								}
 							/>
 						</Field>
+						<Checkbox
+							checked={sameBuyer1}
+							onChange={(_ev, data) => {
+								setSameBuyer1(data.checked);
+
+								// Lấy thông tin Buyer từ state
+								const buyerCompany = state.parties.A.company.value;
+								const buyerAddress = state.parties.A.address.value;
+
+								if (data.checked) {
+									// Khi tick: copy ngay Buyer -> Consignee & Notify Party
+									patch(d => {
+										d.commercial.consignee.company = buyerCompany;
+										d.commercial.consignee.address = buyerAddress;
+									});
+								}
+							}}
+							label='Same buyer'
+						/>
 					</div>
 					<Field label='Consignee - Address' size='small'>
 						<Textarea
+							disabled={sameBuyer1}
 							resize='vertical'
 							value={consignee.address}
 							onChange={(_, d) =>
@@ -346,6 +389,7 @@ export const CommercialTab = () => {
 					<div className={_styles.row}>
 						<Field label='Notify Party - Company' size='small' className={_styles.grow}>
 							<Input
+								disabled={sameBuyer2}
 								size='small'
 								value={notifyParty.company}
 								onChange={(_, d) =>
@@ -355,9 +399,29 @@ export const CommercialTab = () => {
 								}
 							/>
 						</Field>
+						<Checkbox
+							checked={sameBuyer2}
+							onChange={(_ev, data) => {
+								setSameBuyer2(data.checked);
+
+								// Lấy thông tin Buyer từ state
+								const buyerCompany = state.parties.A.company.value;
+								const buyerAddress = state.parties.A.address.value;
+
+								if (data.checked) {
+									// Khi tick: copy ngay Buyer -> Consignee & Notify Party
+									patch(d => {
+										d.commercial.notifyParty.company = buyerCompany;
+										d.commercial.notifyParty.address = buyerAddress;
+									});
+								}
+							}}
+							label='Same buyer'
+						/>
 					</div>
 					<Field label='Notify Party - Address' size='small'>
 						<Textarea
+							disabled={sameBuyer2}
 							resize='vertical'
 							value={notifyParty.address}
 							onChange={(_, d) =>
@@ -390,6 +454,8 @@ export const CommercialTab = () => {
 						<Field label='Port of Discharge (POD)' size='small' className={_styles.grow}>
 							<Input
 								size='small'
+								disabled={state.commercial.incoterm.rule === 'DDP'}
+								placeholder='ex: Bangkok Port - ThaiLand'
 								value={state.commercial.pod}
 								onChange={(_, d) =>
 									patch(dr => {

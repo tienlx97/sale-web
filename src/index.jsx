@@ -1,11 +1,13 @@
 import { FluentProvider, webLightTheme } from '@fluentui/react-components';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
+// biome-ignore lint/correctness/noUnusedImports: <explanation>
+import { c } from 'react-compiler-runtime';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router/dom';
+import { ContractProvider } from './features/dnc-contract/providers/contract-provider';
 import { EditProvider } from './providers/edit-provider';
 import { router } from './router/router';
-import { ContractProvider } from './features/dnc-contract/providers/contract-provider';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

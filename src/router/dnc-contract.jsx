@@ -1,5 +1,9 @@
 /** biome-ignore-all lint/correctness/useUniqueElementIds: <explanation> */
-import { sendContract } from '@/api/contract';
+
+import { Button, makeStyles, mergeClasses, Tab, TabList, Text } from '@fluentui/react-components';
+import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
+import { downloadContract, sendContract } from '@/api/contract';
 import { CommercialTab } from '@/features/dnc-contract/components/commercial-tab';
 import { GeneralTab } from '@/features/dnc-contract/components/general-tab';
 import { InfoTab } from '@/features/dnc-contract/components/info-tab';
@@ -7,14 +11,6 @@ import { PartiesTab } from '@/features/dnc-contract/components/parties-tab';
 import { PaymentsTab } from '@/features/dnc-contract/components/payments-tab';
 import { ScopeDurationTab } from '@/features/dnc-contract/components/scope-duration-tab';
 import { useContract } from '@/features/dnc-contract/providers/contract-provider';
-import { TabList } from '@fluentui/react-components';
-import { Tab } from '@fluentui/react-components';
-import { Text } from '@fluentui/react-components';
-import { mergeClasses } from '@fluentui/react-components';
-import { Button } from '@fluentui/react-components';
-import { makeStyles } from '@fluentui/react-components';
-import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
 
 const useStyles = makeStyles({
 	root: {
@@ -53,6 +49,23 @@ export const DNCContractPage = () => {
 			// e.g. const payload = mapToServerDTO(state);
 			const payload = state;
 			return sendContract(payload);
+		}
+	});
+
+	// Download DOCX/PDF from your server
+	const downloadMutation = useMutation({
+		mutationFn: async format => {
+			const { blob, filename } = await downloadContract(state, format);
+			// trigger browser download
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = filename;
+			document.body.appendChild(a);
+			a.click();
+			a.remove();
+			URL.revokeObjectURL(url);
+			return true;
 		}
 	});
 
@@ -104,8 +117,12 @@ export const DNCContractPage = () => {
 
 					{/* Footer actions */}
 					<div className={_styles.footerRow}>
-						<Button appearance='primary' type='submit' disabled={saveMutation.isPending}>
+						{/* <Button appearance='primary' type='submit' disabled={saveMutation.isPending}>
 							{saveMutation.isPending ? 'Sending…' : 'Send to server'}
+						</Button> */}
+
+						<Button onClick={() => downloadMutation.mutate('docx')} disabled={downloadMutation.isPending}>
+							{downloadMutation.isPending ? 'Preparing…' : 'Download DOCX'}
 						</Button>
 					</div>
 

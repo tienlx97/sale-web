@@ -1,10 +1,6 @@
-import { makeStyles } from '@fluentui/react-components';
-import { Card } from '@fluentui/react-components';
-import { useContract } from '../providers/contract-provider';
-import { Field } from '@fluentui/react-components';
-import { Text } from '@fluentui/react-components';
-import { Input } from '@fluentui/react-components';
+import { Card, Field, Input, makeStyles, Text } from '@fluentui/react-components';
 import { DatePicker } from '@fluentui/react-datepicker-compat';
+import { useContract } from '../providers/contract-provider';
 
 const useStyles = makeStyles({
 	rowFlex: {
@@ -65,6 +61,7 @@ export const GeneralTab = () => {
 			<div className={_styles.rowFlex}>
 				<Field style={{ width: '100%' }} label='Header path' size='small'>
 					<Input
+						disabled
 						size='small'
 						value={headerPath}
 						onChange={(_, d) => {

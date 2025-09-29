@@ -177,3 +177,5 @@ export const contract = {
 	],
 	appendPayments: []
 };
+
+export const INCOTERMS_RULES = ['CIF', 'DDP', 'FOB', 'EXW'];
