@@ -108,7 +108,8 @@ export const initialContract = {
 				paymentPercentText: 'First Payment: Party A shall pay {{percentInWords}} ({{percent}}%) of the Contract Value.',
 				paymentValueText: '{{currency}} {{contractValue}} x {{percent}}% = {{currency}} {{paymentValue}}',
 				moneyTextInword: `*(In words: {{paymentInWords}})*`,
-				termText: 'by {{term}} within {{daysInWords}} ({{days}}) calendar days from the date of Contract signing',
+				termText:
+					'by {{term}} within {{daysInWords}} ({{days}}) calendar days from the date of Contract signing & against Party B’s pro-forma invoice',
 				endText: 'Receipt of this payment shall be a condition precedent for Party B to commence fabrication, subject to drawing approval.'
 			}
 		},
