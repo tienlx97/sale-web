@@ -15,9 +15,20 @@ export async function sendContract(payload) {
 }
 
 export async function downloadContract(payload, format = 'pdf') {
-	console.log({ apiUrl });
-
 	const res = await fetch(`${apiUrl}/v1/contract?format=${format}`, {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(payload)
+	});
+	if (!res.ok) throw new Error(await res.text());
+
+	const blob = await res.blob();
+	const filename = `contract-${new Date().toISOString().slice(0, 10)}.${format}`;
+	return { blob, filename };
+}
+
+export async function downloadPaymentRequest(payload, format = 'pdf') {
+	const res = await fetch(`${apiUrl}/v1/payment-request?format=${format}`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(payload)
