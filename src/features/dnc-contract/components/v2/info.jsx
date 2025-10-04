@@ -20,11 +20,11 @@ export const Info = () => {
 		<Card>
 			<div className={_s.fixWrapper}>
 				<Field label={info.no.key} size='small'>
-					<Input size='small' value={info.no.value} onChange={(_, data) => setField('no', data.value)} />
+					<Input placeholder='ex: 25KCT28' size='small' value={info.no.value} onChange={(_, data) => setField('no', data.value)} />
 				</Field>
 
 				<Field label={info.project.key} size='small'>
-					<Input size='small' value={info.project.value} onChange={(_, data) => setField('project', data.value)} />
+					<Input placeholder='ex: ' size='small' value={info.project.value} onChange={(_, data) => setField('project', data.value)} />
 				</Field>
 
 				<Field label={info.item.key} size='small'>
