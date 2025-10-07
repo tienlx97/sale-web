@@ -112,7 +112,13 @@ export const CommercialTab = () => {
 					<Field label='Incoterm Rule' size='small' className={_s.grow}>
 						<Combobox
 							value={state.incoterm.rule}
-							onOptionSelect={(_, d) => setIncotermRule(d.optionValue ?? '')}
+							onOptionSelect={(_, d) => {
+								if (d.optionValue === 'EXW') {
+									setIncotermLocation('Dai Nghia Factory - Vietnam');
+								}
+
+								setIncotermRule(d.optionValue ?? '');
+							}}
 							placeholder='Select Incoterm rule'
 						>
 							{INCOTERMS_RULES.map(rule => (
