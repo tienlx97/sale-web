@@ -34,8 +34,7 @@ function makeCoreInitial() {
 				paymentPercentText: 'Second Payment: Party A shall pay {{percentInWords}} ({{percent}}%) of the Contract Value.',
 				paymentValueText: '{{currency}} {{contractValue}} x {{percent}}% = {{currency}} {{paymentValue}}',
 				moneyTextInword: '*(In words: {{paymentInWords}})*',
-				termText:
-					'by {{term}} within {{daysInWords}} ({{days}}) calendar days after completion of inspection at Party B’s factory in Vietnam and prior to shipment release.'
+				termText: 'by {{term}} within {{daysInWords}} ({{days}}) calendar days prior to shipment release.'
 			}
 		}
 	];
